@@ -22,11 +22,9 @@ struct list {
 };
 
 template <class K>
-int h(K& x) {
-    vector<int> simple_nums = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71 };
-    int result = 0;
-    for (int i = 0; i < x.size(); i++)
-        result = (result + ((char)x[i]) * simple_nums[i]) % M;
+int h(K& x) 
+{
+    
     return result;
 }
 
@@ -34,15 +32,20 @@ template <class T, class K>
 class HashTable {
     vector<list*> table;
     list* prev;
+    int capacity;
+    int count;
 
-    HashTable() {
-        table.resize(M);
+    HashTable() 
+    {
+        table.resize(0);
         prev = nullptr;
     }
 
-     void insert(K key, T data) {
+     void insert(K key, T data) 
+     {
         int k = h(key);
-        if (table[k] == nullptr) {
+        if (table[k] == nullptr) 
+        {
             table[k] = new list(key, data, nullptr);
             table[k]->prev = prev;
             if (prev != nullptr)
@@ -51,12 +54,15 @@ class HashTable {
             return table[k];
         }
         list* p = table[k];
-        while (p != nullptr) {
-            if (p->key == key) {
+        while (p != nullptr) 
+        {
+            if (p->key == key) 
+            {
                 p->data = data;
                 return p;
             }
-            if (p->next_list == nullptr) {
+            if (p->next_list == nullptr) 
+            {
                 p->next_list = new list(key, data, nullptr);
                 p->next_list->prev = prev;
                 if (prev != nullptr)
