@@ -131,9 +131,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DynamicArray.h" />
-    <ClInclude Include="HashTableTest.h" />
+    <ClInclude Include="HashTable1.h" />
     <ClInclude Include="HashTable.h" />
-    <ClInclude Include="Header.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Pair.h" />
   </ItemGroup>
