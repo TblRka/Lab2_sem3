@@ -14,7 +14,7 @@ public:
 	DynamicArray(const DynamicArray<T>& dynamicArray);
 	~DynamicArray();
 
-	T Get(int index);
+	T& Get(int index);
 	int GetSize();
 
 	void Set(int index, T value);
@@ -54,7 +54,7 @@ template <class T> DynamicArray<T>:: ~DynamicArray()
 	delete[] arr;
 }
 
-template <class T> T DynamicArray<T>::Get(int index)
+template <class T> T& DynamicArray<T>::Get(int index)
 {
 	if (index >= size || index < 0)
 	{

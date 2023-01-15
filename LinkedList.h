@@ -9,7 +9,6 @@ private:
     {
         T data;
         struct Item* next = nullptr;
-
     };
 
     struct Item* head = nullptr;
@@ -23,7 +22,7 @@ public:
 
     T GetFirst();
     T GetLast();
-    T GetIndex(int index);
+    T& GetIndex(int index);
     int GetLength();
     LinkedList<T>* GetSubList(int startIndex, int endIndex);
 
@@ -112,7 +111,7 @@ template <class T> T LinkedList<T>::GetLast()
     }
     return tail->data;
 }
-template <class T> T LinkedList<T>::GetIndex(int index)
+template <class T> T& LinkedList<T>::GetIndex(int index)
 {
     if (size == 0 || index < 0 || index >= size)
     {

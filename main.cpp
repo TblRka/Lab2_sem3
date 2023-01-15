@@ -1,4 +1,7 @@
-#include "LinkedList.h"
+#include "HashTable.h"
+#include <iostream>
+
+using namespace std;
 
 int main()
 {
@@ -10,4 +13,14 @@ int main()
     list->Print_line();
     list->Delete(2);
     list->Print_line();
+
+    HashTable<string, int>* Table = new HashTable<string, int>();
+    for (int i = 0; i < 3; i++)
+    {
+        string key;
+        int value;
+        cin >> key >> value;
+        Table->Insert(key, value);
+    }
+    Table->Print();
 }

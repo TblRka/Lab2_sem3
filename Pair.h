@@ -8,26 +8,32 @@ public:
 	Second second;
 public:
 	Pair() = default;
+
 	explicit Pair(First _first, Second _second) 
 	{
 		first = _first;
 		second = _second;
 	}
+
 	Pair(const Pair<First, Second>& another) 
 	{
 		first = another.first;
 		second = another.second;
 	}
+
 	Pair(const std::pair<First, Second>& another) 
 	{
 		first = another.first;
 		second = another.second;
 	}
+
 	~Pair() = default;
+
 	Pair& operator=(Pair pair) 
 	{
 		std::swap(first, pair.first);
 		std::swap(second, pair.second);
+
 		return *this;
 	}
 };
@@ -38,6 +44,7 @@ bool operator==(const Pair<First, Second>& one, const Pair<First, Second>& two)
 	{
 		return true;
 	}
+
 	return false;
 }
 
@@ -52,5 +59,6 @@ template <typename First, typename Second>
 std::ostream& operator<<(std::ostream& out, const Pair<First, Second>& pair) 
 {
 	out << "[" << pair.first << ", " << pair.second << "]";
+
 	return out;
 }
