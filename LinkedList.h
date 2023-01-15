@@ -30,6 +30,7 @@ public:
     void Append(T item);
     void Prepend(T item);
     void InsertAt(int index, T item);
+    void Delete(int index);
     void DeleteLast();
     LinkedList<T>* Concat(LinkedList<T>* list);
 
@@ -267,6 +268,36 @@ template <class T> void LinkedList<T>::Print(int index)
         ptr = ptr->next;
     }
 }
+
+template <class T> void LinkedList<T>::Delete(int index) {
+    if (index < 0 || index >= size) throw std::exception("Index out of range");
+    if (head) {
+        struct Item* ptr = head;
+        struct Item* prev = nullptr;
+        size--;
+        for (int i = 0; i < index; ++i) 
+        {
+            prev = ptr;
+            ptr = ptr->next;
+        }
+        if (ptr == head) 
+        {
+            head = head->next;
+            delete ptr;
+            return;
+        }
+        if (ptr == tail) 
+        {
+            delete tail;
+            tail = prev;
+            tail->next = nullptr;
+            return;
+        }
+        prev->next = ptr->next;
+        delete ptr;
+    }
+}
+
 template <class T> void LinkedList<T>::DeleteLast()
 {
     struct Item* ptr = head;
