@@ -9,19 +9,19 @@ class HashTable
 {
 private:
 	template <typename Key, typename Value>
-	struct Bucket 
+	struct Chain 
 	{
 	private:
 		friend HashTable;
 		LinkedList<Pair<Key, Value>>* list;
 		size_t _size;
 	public:
-		Bucket() 
+		Chain() 
 		{
 			list = nullptr;
 			_size = 0;
 		}
-		~Bucket() 
+		~Chain() 
 		{
 			if (list) delete list;
 		}
@@ -57,7 +57,7 @@ private:
 	size_t arr_size = 0;
 	size_t size = 0;
 	double max_load_factor = 0.75;
-	DynamicArray<Bucket<Key, Value>*>* table = nullptr;
+	DynamicArray<Chain<Key, Value>*>* table = nullptr;
 	Hash hasher;
 
 public:
@@ -99,7 +99,7 @@ template <typename Key, typename Value, typename Hash>
 HashTable<Key, Value, Hash>::HashTable() 
 {
 	arr_size = 10;
-	table = new DynamicArray<Bucket<Key, Value>*>;
+	table = new DynamicArray<Chain<Key, Value>*>;
 	table->Resize(arr_size);
 	for (int i = 0; i < arr_size; ++i) 
 	{
@@ -120,7 +120,7 @@ HashTable<Key, Value, Hash>::HashTable(const HashTable<Key, Value, Hash>& anothe
 	size = another.size;
 	hasher = another.hasher;
 
-	table = new DynamicArray<Bucket<Key, Value>*>;
+	table = new DynamicArray<Chain<Key, Value>*>;
 	table->Resize(arr_size);
 
 	for (int i = 0; i < arr_size; ++i) 
@@ -131,7 +131,7 @@ HashTable<Key, Value, Hash>::HashTable(const HashTable<Key, Value, Hash>& anothe
 	{
 		if (another.table->Get(i)) 
 		{
-			table->Get(i) = new Bucket<Key, Value>;
+			table->Get(i) = new Chain<Key, Value>;
 			if (another.table->Get(i)->list) 
 			{
 				size_t sz = another.table->Get(i)->size();
@@ -183,7 +183,7 @@ void HashTable<Key, Value, Hash>::Insert(const Key key, const Value value) {
 	if (!table) 
 	{
 		arr_size = 10;
-		table = new DynamicArray<Bucket<Key, Value>*>;
+		table = new DynamicArray<Chain<Key, Value>*>;
 		table->Resize(arr_size);
 		for (int i = 0; i < arr_size; ++i) 
 		{
@@ -193,7 +193,7 @@ void HashTable<Key, Value, Hash>::Insert(const Key key, const Value value) {
 	size_t index = get_hash(key, arr_size);
 	if (!table->Get(index)) 
 	{
-		table->Get(index) = new Bucket<Key, Value>;
+		table->Get(index) = new Chain<Key, Value>;
 	}
 	if (table->Get(index)->find(key))
 	{
@@ -255,7 +255,7 @@ Value& HashTable<Key, Value, Hash>::At(const Key& key)
 	if (!table) 
 	{
 		arr_size = 10;
-		table = new DynamicArray<Bucket<Key, Value>*>;
+		table = new DynamicArray<Chain<Key, Value>*>;
 		table->Resize(arr_size);
 		for (int i = 0; i < arr_size; ++i) 
 		{
@@ -265,31 +265,31 @@ Value& HashTable<Key, Value, Hash>::At(const Key& key)
 	size_t index = get_hash(key, arr_size);
 	if (!table->Get(index)) //если бакета нет, создаем его
 	{
-		table->Get(index) = new Bucket<Key, Value>;
+		table->Get(index) = new Chain<Key, Value>;
 	}
-	Bucket<Key, Value>* bucket = table->Get(index);
-	if (bucket->find(key)) //проверяем наличие этого ключа в бакете, если есть, заменяем
+	Chain<Key, Value>* chain = table->Get(index);
+	if (chain->find(key)) //проверяем наличие этого ключа в бакете, если есть, заменяем
 	{
 		int i = 0;
-		while (key != bucket->list->GetIndex(i).first) 
+		while (key != chain->list->GetIndex(i).first) 
 		{
 			i++;
 		}
-		return bucket->list->GetIndex(i).second;
+		return chain->list->GetIndex(i).second;
 	}
 	else //если нет элемента в бакете
 	{ 
-		if (!bucket->list) //проверяем, есть ли список в бакете, если нет, создаем 
+		if (!chain->list) //проверяем, есть ли список в бакете, если нет, создаем 
 		{
-			bucket->list = new LinkedList<Pair<Key, Value>>;
+			chain->list = new LinkedList<Pair<Key, Value>>;
 		}
-		bucket->push_back(Pair<Key, Value>{ Key(), Value() });
+		chain->push_back(Pair<Key, Value>{ Key(), Value() });
 		size++;
 		if (GetLoadFactor() > max_load_factor) 
 		{
 			Rehash(2 * arr_size);
 		}
-		return bucket->list->GetIndex(bucket->size() - 1).second;
+		return chain->list->GetIndex(chain->size() - 1).second;
 	}
 }
 
@@ -304,15 +304,15 @@ void HashTable<Key, Value, Hash>::Print()
 	std::cout << "{ ";
 	for (int i = 0; i < arr_size; ++i) 
 	{
-		Bucket<Key, Value>* bucket = table->Get(i);
-		if (bucket) 
+		Chain<Key, Value>* chain = table->Get(i);
+		if (chain) 
 		{
-			if (bucket->list) 
+			if (chain->list) 
 			{
-				int sz = bucket->size();
+				int sz = chain->size();
 				for (int j = 0; j < sz; ++j) 
 				{
-					std::cout << bucket->list->GetIndex(j) << i << " ";
+					std::cout << chain->list->GetIndex(j) << i << " ";
 				}
 			}
 		}
@@ -325,7 +325,7 @@ void HashTable<Key, Value, Hash>::Rehash(size_t new_size) {
 	if (!table) 
 	{
 		arr_size = new_size;
-		table = new DynamicArray<Bucket<Key, Value>*>;
+		table = new DynamicArray<Chain<Key, Value>*>;
 		table->Resize(arr_size);
 		for (int i = 0; i < arr_size; ++i) 
 		{
@@ -338,7 +338,7 @@ void HashTable<Key, Value, Hash>::Rehash(size_t new_size) {
 		return;
 	}
 
-	DynamicArray<Bucket<Key, Value>*>* new_table = new DynamicArray<Bucket<Key, Value>*>;
+	DynamicArray<Chain<Key, Value>*>* new_table = new DynamicArray<Chain<Key, Value>*>;
 	new_table->Resize(new_size);
 	for (int i = 0; i < new_size; ++i) 
 	{
@@ -357,7 +357,7 @@ void HashTable<Key, Value, Hash>::Rehash(size_t new_size) {
 					size_t index = get_hash(tmp_pair.first, new_size);
 					if (!new_table->Get(i))
 					{
-						new_table->Get(i) = new Bucket<Key, Value>;
+						new_table->Get(i) = new Chain<Key, Value>;
 					}
 					new_table->Get(i)->push_back(Pair<Key, Value>{tmp_pair.first, tmp_pair.second});
 				}
@@ -421,7 +421,7 @@ HashTable<Key, Value, Hash>& HashTable<Key, Value, Hash>::operator=(const HashTa
 	max_load_factor = another.max_load_factor;
 	size = another.size;
 	hasher = another.hasher;
-	table = new DynamicArray<Bucket<Key, Value>*>;
+	table = new DynamicArray<Chain<Key, Value>*>;
 	table->Resize(arr_size);
 	for (int i = 0; i < arr_size; ++i) 
 	{
@@ -431,7 +431,7 @@ HashTable<Key, Value, Hash>& HashTable<Key, Value, Hash>::operator=(const HashTa
 	{
 		if (another.table->Get(i)) 
 		{
-			table->Get(i) = new Bucket<Key, Value>;
+			table->Get(i) = new Chain<Key, Value>;
 			if (another.table->Get(i)->list) 
 			{
 				size_t sz = another.table->Get(i)->size();
@@ -451,7 +451,7 @@ Value& HashTable<Key, Value, Hash>::operator[](const Key& key)
 	if (!table) 
 	{
 		arr_size = 10;
-		table = new DynamicArray<Bucket<Key, Value>*>;
+		table = new DynamicArray<Chain<Key, Value>*>;
 		table->Resize(arr_size);
 		for (int i = 0; i < arr_size; ++i) 
 		{
@@ -461,26 +461,26 @@ Value& HashTable<Key, Value, Hash>::operator[](const Key& key)
 	size_t index = get_hash(key, arr_size);
 	if (!table->Get(index)) //если бакета нет, создаем его
 	{
-		table->Get(index) = new Bucket<Key, Value>;
+		table->Get(index) = new Chain<Key, Value>;
 	}
-	Bucket<Key, Value>* bucket = table->Get(index);
-	if (bucket->find(key)) //проверяем наличие этого ключа в бакете, если есть, заменяем
+	Chain<Key, Value>* chain = table->Get(index);
+	if (chain->find(key)) //проверяем наличие этого ключа в бакете, если есть, заменяем
 	{
 		int i = 0;
-		while (key != bucket->list->GetIndex(i).first) 
+		while (key != chain->list->GetIndex(i).first) 
 		{
 			i++;
 		}
-		return bucket->list->GetIndex(i).second;
+		return chain->list->GetIndex(i).second;
 	}
 	else //если нет элемента в бакете
 	{
-		bucket->push_back(Pair<Key, Value>{ key, Value() });
+		chain->push_back(Pair<Key, Value>{ key, Value() });
 		size++;
 		if (GetLoadFactor() > max_load_factor) 
 		{
 			Rehash(2 * arr_size);
 		}
-		return bucket->list->GetIndex(bucket->size() - 1).second;
+		return chain->list->GetIndex(chain->size() - 1).second;
 	}
 }
