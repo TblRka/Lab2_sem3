@@ -75,11 +75,12 @@ void menu_type()
 				fout << hist.get_right(i) << " ";
 				fout << hist.get_column_size(i) << "\n";
 			}
+
 			fout.close();
 		}
 
 			//system("start Plot_text.exe");;
-			break;
+		break;
 
 		case 5:
 			std::cout << hist;
