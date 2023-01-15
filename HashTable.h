@@ -62,7 +62,7 @@ private:
 
 public:
 	HashTable(); //+
-	//HashTable(const HashTable<Key, Value, Hash>& other);
+	HashTable(const HashTable<Key, Value, Hash>& other);//+
 	~HashTable(); //+
 
 	size_t GetCapacity(); //+
@@ -107,32 +107,42 @@ HashTable<Key, Value, Hash>::HashTable()
 	}
 }
 
-/*
+
 template <typename Key, typename Value, typename Hash>
-HashTable<Key, Value, Hash>::HashTable(const HashTable<Key, Value, Hash>& another) {
-	if (table) delete table;
+HashTable<Key, Value, Hash>::HashTable(const HashTable<Key, Value, Hash>& another)
+{
+	if (table)
+	{
+		delete table;
+	}
 	arr_size = another.arr_size;
 	max_load_factor = another.max_load_factor;
 	size = another.size;
 	hasher = another.hasher;
+
 	table = new DynamicArray<Bucket<Key, Value>*>;
 	table->Resize(arr_size);
-	for (int i = 0; i < arr_size; ++i) {
+
+	for (int i = 0; i < arr_size; ++i)
+	{
 		table->Get(i) = nullptr;
 	}
-	for (int i = 0; i < arr_size; ++i) {
-		if (another.table->Get(i)) {
+	for (int i = 0; i < arr_size; ++i)
+	{
+		if (another.table->Get(i))
+		{
 			table->Get(i) = new Bucket<Key, Value>;
-			if (another.table->Get(i)->list) {
+			if (another.table->Get(i)->list)
+			{
 				size_t sz = another.table->Get(i)->size();
-				for (int j = 0; j < sz; ++j) {
+				for (int j = 0; j < sz; ++j)
+				{
 					table->Get(i)->push_back(another.table->Get(i)->list->GetIndex(j));
 				}
 			}
 		}
 	}
 }
-*/
 
 template <typename Key, typename Value, typename Hash>
 HashTable<Key, Value, Hash>::~HashTable()
@@ -169,7 +179,8 @@ bool HashTable<Key, Value, Hash>::Empty()
 }
 
 template <typename Key, typename Value, typename Hash>
-void HashTable<Key, Value, Hash>::Insert(const Key key, const Value value) {
+void HashTable<Key, Value, Hash>::Insert(const Key key, const Value value) 
+{
 	if (!table)
 	{
 		arr_size = 10;
@@ -212,6 +223,7 @@ bool HashTable<Key, Value, Hash>::Find(const Key& key)
 			return true;
 		}
 	}
+
 	return false;
 }
 
@@ -263,6 +275,7 @@ Value& HashTable<Key, Value, Hash>::At(const Key& key)
 		{
 			i++;
 		}
+
 		return bucket->list->GetIndex(i).second;
 	}
 	else //если нет элемента в бакете
@@ -277,6 +290,7 @@ Value& HashTable<Key, Value, Hash>::At(const Key& key)
 		{
 			Rehash(2 * arr_size);
 		}
+
 		return bucket->list->GetIndex(bucket->size() - 1).second;
 	}
 }
@@ -289,6 +303,7 @@ void HashTable<Key, Value, Hash>::Print()
 		std::cout << "{}";
 		return;
 	}
+
 	std::cout << "{ ";
 	for (int i = 0; i < arr_size; ++i)
 	{
@@ -309,7 +324,8 @@ void HashTable<Key, Value, Hash>::Print()
 }
 
 template <typename Key, typename Value, typename Hash>
-void HashTable<Key, Value, Hash>::Rehash(size_t new_size) {
+void HashTable<Key, Value, Hash>::Rehash(size_t new_size) 
+{
 	if (!table)
 	{
 		arr_size = new_size;
@@ -319,6 +335,7 @@ void HashTable<Key, Value, Hash>::Rehash(size_t new_size) {
 		{
 			table->Get(i) = nullptr;
 		}
+
 		return;
 	}
 	if (static_cast<double>(size) / new_size > max_load_factor)
@@ -396,6 +413,7 @@ size_t HashTable<Key, Value, Hash>::Erase(const Key& key) {
 			return 1;
 		}
 	}
+
 	return 0;
 }
 
@@ -430,6 +448,7 @@ HashTable<Key, Value, Hash>& HashTable<Key, Value, Hash>::operator=(const HashTa
 			}
 		}
 	}
+
 	return *this;
 }
 
@@ -459,6 +478,7 @@ Value& HashTable<Key, Value, Hash>::operator[](const Key& key)
 		{
 			i++;
 		}
+
 		return bucket->list->GetIndex(i).second;
 	}
 	else //если нет элемента в бакете
@@ -469,6 +489,7 @@ Value& HashTable<Key, Value, Hash>::operator[](const Key& key)
 		{
 			Rehash(2 * arr_size);
 		}
+
 		return bucket->list->GetIndex(bucket->size() - 1).second;
 	}
 }
