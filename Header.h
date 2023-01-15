@@ -75,14 +75,14 @@ public:
 
 	Value& At(const Key& key); //+
 
-	size_t Erase(const Key& key);
+	size_t Erase(const Key& key);//?
 
-	void Insert(const Key key, const Value value);
+	void Insert(const Key key, const Value value);//?
 	bool Find(const Key& key); //+
 
 	void Print(); //+
-	void Rehash(size_t new_size);
-	void Reserve(size_t count);
+	void Rehash(size_t new_size);//+?
+	void Reserve(size_t count);//?
 
 	HashTable<Key, Value, Hash>& operator=(const HashTable<Key, Value, Hash>& another);
 	Value& operator[](const Key& key);
@@ -311,30 +311,43 @@ void HashTable<Key, Value, Hash>::Print()
 
 template <typename Key, typename Value, typename Hash>
 void HashTable<Key, Value, Hash>::Rehash(size_t new_size) {
-	if (!table) {
+	if (!table) 
+	{
 		arr_size = new_size;
 		table = new DynamicArray<Bucket<Key, Value>*>;
 		table->Resize(arr_size);
-		for (int i = 0; i < arr_size; ++i) {
+		for (int i = 0; i < arr_size; ++i) 
+		{
 			table->Get(i) = nullptr;
 		}
 		return;
 	}
-	if (static_cast<double>(size) / new_size > max_load_factor) return;//мб выкидывать исключение
+	if (static_cast<double>(size) / new_size > max_load_factor)
+	{
+		return;
+	}
+
 	DynamicArray<Bucket<Key, Value>*>* new_table = new DynamicArray<Bucket<Key, Value>*>;
 	new_table->Resize(new_size);
-	for (int i = 0; i < new_size; ++i) {
+	for (int i = 0; i < new_size; ++i) 
+	{
 		new_table->Get(i) = nullptr;
 	}
-	for (int i = 0; i < size; ++i) {
-		if (table->Get(i)) {
-			if (table->Get(i)->list) {
+	for (int i = 0; i < size; ++i) //?
+	{
+		if (table->Get(i)) 
+		{
+			if (table->Get(i)->list) 
+			{
 				size_t sz = table->Get(i)->size();
-				for (int j = 0; j < sz; ++j) {
+				for (int j = 0; j < sz; ++j) 
+				{
 					Pair<Key, Value>& tmp_pair = table->Get(i)->list->GetIndex(j);
 					size_t index = get_hash(tmp_pair.first, new_size);
 					if (!new_table->Get(i))
+					{
 						new_table->Get(i) = new Bucket<Key, Value>;
+					}
 					new_table->Get(i)->push_back(Pair<Key, Value>{tmp_pair.first, tmp_pair.second});
 				}
 			}
@@ -350,7 +363,10 @@ void HashTable<Key, Value, Hash>::Rehash(size_t new_size) {
 
 template <typename Key, typename Value, typename Hash>
 void HashTable<Key, Value, Hash>::Reserve(size_t count) {
-	if (count < size) return;
+	if (count < size)
+	{
+		return;
+	}
 	size_t new_size = static_cast<size_t>(std::ceil(count / max_load_factor));
 	Rehash(new_size + 2);
 }
