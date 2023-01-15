@@ -27,7 +27,7 @@ Student generate()
 	Student example;
 	std::vector<std::string> names = { "Alexey", "Yan", "Artem", "Andrey", "Ivan", "Nikita", "Michail", "Alexandr", "Pavel" };
 	example.SetName(names[rand() % 9]);
-	example.SetAge(17 + rand() % 4);
+	example.SetAge(17 + rand() % 5);
 	example.SetGroup(100 + rand() % 899);
 	example.SetCourse(1 + rand() % 4);
 

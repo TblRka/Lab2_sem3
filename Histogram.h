@@ -39,10 +39,10 @@ private:
 	Pull take_parametr;
 
 public:
-	Histogram(); //
+	Histogram(); // +
 	Histogram(const Histogram<Obj, X, Pull>& another); //
 	Histogram(DynamicArray<Pair<X, X>>& _xseries, DynamicArray<Obj>& objects); //
-	~Histogram(); //
+	~Histogram(); // +
 
 	void show(char symb = 42); //
 	void insert(Obj& object); //
