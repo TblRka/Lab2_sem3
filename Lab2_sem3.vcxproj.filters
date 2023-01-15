@@ -46,7 +46,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\Lab1_sem3\lab1_test\input.txt">
+    <Text Include="input.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
   </ItemGroup>
