@@ -75,14 +75,14 @@ public:
 
 	Value& At(const Key& key); //+
 
-	size_t Erase(const Key& key);//?
+	size_t Erase(const Key& key);//+
 
-	void Insert(const Key key, const Value value);//?
+	void Insert(const Key key, const Value value);//+
 	bool Find(const Key& key); //+
 
 	void Print(); //+
-	void Rehash(size_t new_size);//+?
-	void Reserve(size_t count);//?
+	void Rehash(size_t new_size);//+
+	void Reserve(size_t count);//+
 
 	HashTable<Key, Value, Hash>& operator=(const HashTable<Key, Value, Hash>& another);
 	Value& operator[](const Key& key);
@@ -333,7 +333,7 @@ void HashTable<Key, Value, Hash>::Rehash(size_t new_size) {
 	{
 		new_table->Get(i) = nullptr;
 	}
-	for (int i = 0; i < size; ++i) //?
+	for (int i = 0; i < arr_size; ++i) // size
 	{
 		if (table->Get(i)) 
 		{
@@ -353,7 +353,9 @@ void HashTable<Key, Value, Hash>::Rehash(size_t new_size) {
 			}
 		}
 	}
-	for (int i = 0; i < size; ++i) {
+	for (int i = 0; i < arr_size; ++i) // + if
+	{
+
 		delete table->Get(i);
 	}
 	delete table;
@@ -389,6 +391,7 @@ size_t HashTable<Key, Value, Hash>::Erase(const Key& key) {
 			}
 			table->Get(i)->list->Delete(i);
 			table->Get(i)->_size--;
+			size--;
 			return 1;
 		}
 	}
