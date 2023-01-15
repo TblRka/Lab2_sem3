@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include "Histogram.h"
 #include "Student.h"
@@ -64,7 +65,20 @@ void menu_type()
 		break;
 
 		case 4:
-			hist.show();
+		{
+			std::ofstream fout;
+			fout.open("input.txt", std::ofstream::trunc);
+
+			for (int i = 0; i < hist.get_columns_count(); i++)
+			{
+				fout << hist.get_left(i) << " ";
+				fout << hist.get_right(i) << " ";
+				fout << hist.get_column_size(i) << "\n";
+			}
+			fout.close();
+		}
+
+			//system("start Plot_text.exe");;
 			break;
 
 		case 5:

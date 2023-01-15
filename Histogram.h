@@ -44,14 +44,17 @@ public:
 	Histogram(DynamicArray<Pair<X, X>>& _xseries, DynamicArray<Obj>& objects); //
 	~Histogram(); // +
 
-	void show(char symb = 42); //
+	void show(char symb = 42);//
 	void insert(Obj& object); //
 	void remove(X& value); //
 
 	void describe(); //
 
-	size_t get_columns_count(); //
-	size_t get_count(); //
+	size_t get_columns_count();
+	size_t get_column_size(int index);//
+	size_t get_count();
+	X get_left(int index);
+	X get_right(int index);//
 
 	template <class Obj, class X, class Pull> //
 	friend std::ostream& operator<<(std::ostream& out, Histogram<Obj, X, Pull>& hist); //
@@ -128,9 +131,27 @@ size_t Histogram<Obj, X, Pull>::get_columns_count()
 }
 
 template <class Obj, class X, class Pull>
+size_t Histogram<Obj, X, Pull>::get_column_size(int index)
+{
+	return columns->At(xseries->Get(index))->GetSize();
+}
+
+template <class Obj, class X, class Pull>
 size_t Histogram<Obj, X, Pull>::get_count() 
 {
 	return count;
+}
+
+template <class Obj, class X, class Pull>
+X Histogram<Obj, X, Pull>::get_left(int index)
+{
+	return xseries->Get(index).first;
+}
+
+template <class Obj, class X, class Pull>
+X Histogram<Obj, X, Pull>::get_right(int index)
+{
+	return xseries->Get(index).second;
 }
 
 template <class Obj, class X, class Pull>
@@ -140,7 +161,7 @@ void Histogram<Obj, X, Pull>::show(char symb)
 	for (int i = 0; i < columns_count; ++i) 
 	{
 		size_t sz = columns->At(xseries->Get(i))->GetSize();
-		std::cout << xseries->Get(i) << ":";
+		std::cout << xseries->Get(i).first << " " << xseries->Get(i).second << ":";
 		for (int j = 0; j < sz; ++j) 
 		{
 			std::cout << symb;
@@ -199,6 +220,7 @@ double Histogram<Obj, X, Pull>::mean(const Pair<X, X>& pair)
 		return res / sz;
 	}
 }
+
 template <class Obj, class X, class Pull>
 double Histogram<Obj, X, Pull>::median(const Pair<X, X>& pair) 
 {
@@ -222,6 +244,7 @@ double Histogram<Obj, X, Pull>::median(const Pair<X, X>& pair)
 	}
 	return X();
 }
+
 template <class Obj, class X, class Pull>
 double Histogram<Obj, X, Pull>::max(const Pair<X, X>& pair) 
 {
@@ -242,6 +265,7 @@ double Histogram<Obj, X, Pull>::max(const Pair<X, X>& pair)
 	}
 	return 0.0;
 }
+
 template <class Obj, class X, class Pull>
 double Histogram<Obj, X, Pull>::min(const Pair<X, X>& pair) 
 {
