@@ -353,10 +353,12 @@ void HashTable<Key, Value, Hash>::Rehash(size_t new_size) {
 			}
 		}
 	}
-	for (int i = 0; i < arr_size; ++i) // + if
+	for (int i = 0; i < arr_size; ++i) 
 	{
-
-		delete table->Get(i);
+		if (!table->Get(i))
+		{
+			delete table->Get(i);
+		}
 	}
 	delete table;
 	table = new_table;
