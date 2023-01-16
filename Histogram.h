@@ -45,6 +45,7 @@ public:
 	~Histogram(); //+
 
 	void show(char symb = 42);//+
+	void show_file();
 	void insert(Obj& object); //+?
 	void remove(X& value); //+?
 
@@ -172,6 +173,24 @@ void Histogram<Obj, X, Pull>::show(char symb)
 		}
 		std::cout << "\n";
 	}
+}
+
+template <class Obj, class X, class Pull>
+void Histogram<Obj, X, Pull>::show_file()
+{
+	if (!columns) return;
+	std::ofstream fout;
+	fout.open("input.txt", std::ofstream::trunc);
+	for (int i = 0; i < columns_count; ++i)
+	{
+			fout << xseries->Get(i).first << " ";
+			fout << xseries->Get(i).second << " ";
+			fout << get_column_size(i) << " ";
+			fout << mean(xseries->Get(i)) << " ";
+			fout << min(xseries->Get(i)) << " ";
+			fout << max(xseries->Get(i)) << "\n";
+	}
+	fout.close();
 }
 
 template <class Obj, class X, class Pull>
