@@ -181,6 +181,9 @@ void Histogram<Obj, X, Pull>::show_file()
 	if (!columns) return;
 	std::ofstream fout;
 	fout.open("input.txt", std::ofstream::trunc);
+	fout << columns->GetLoadFactor() << "\n";
+	//fout << columns->GetCapacity() << "\n";
+	//fout << columns->GetSize() << "\n";
 	for (int i = 0; i < columns_count; ++i)
 	{
 			fout << xseries->Get(i).first << " ";

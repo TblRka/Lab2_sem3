@@ -68,8 +68,7 @@ void menu_type()
 		{
 			hist.show_file();
 		}
-
-			//system("start Plot_text.exe");;
+		//system("start Plot_text.exe");;
 		break;
 
 		case 5:
