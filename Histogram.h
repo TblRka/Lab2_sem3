@@ -182,14 +182,13 @@ void Histogram<Obj, X, Pull>::show_file()
 	std::ofstream fout;
 	fout.open("input.txt", std::ofstream::trunc);
 	fout << columns->GetLoadFactor() << "\n";
-	//fout << columns->GetCapacity() << "\n";
-	//fout << columns->GetSize() << "\n";
 	for (int i = 0; i < columns_count; ++i)
 	{
 			fout << xseries->Get(i).first << " ";
 			fout << xseries->Get(i).second << " ";
 			fout << get_column_size(i) << " ";
 			fout << mean(xseries->Get(i)) << " ";
+			fout << median(xseries->Get(i)) << " ";
 			fout << min(xseries->Get(i)) << " ";
 			fout << max(xseries->Get(i)) << "\n";
 	}
