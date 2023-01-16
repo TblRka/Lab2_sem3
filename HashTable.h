@@ -81,7 +81,7 @@ public:
 
 	void Print(); //+
 	void Rehash(size_t new_size);//+
-	void Reserve(size_t count);//++
+	void Reserve(size_t count);//+
 
 	HashTable<Key, Value, Hash>& operator=(const HashTable<Key, Value, Hash>& another);
 	Value& operator[](const Key& key);

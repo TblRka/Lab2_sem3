@@ -45,10 +45,10 @@ public:
 	~Histogram(); //+
 
 	void show(char symb = 42);//+
-	void insert(Obj& object); //
-	void remove(X& value); //
+	void insert(Obj& object); //+?
+	void remove(X& value); //+?
 
-	void describe(); //
+	void describe(); //+
 
 	size_t get_columns_count();//+
 	size_t get_column_size(int index);//+
@@ -62,7 +62,7 @@ public:
 	double max(const Pair<X, X>& pair); //+
 	double min(const Pair<X, X>& pair); //+
 
-	void fill_rand(size_t count, DynamicArray<Pair<X, X>>& _xaeries); //
+	void fill_rand(size_t count, DynamicArray<Pair<X, X>>& _xaeries); //+
 
 	template <class Obj, class X, class Pull>
 	friend std::ostream& operator<<(std::ostream& out, Histogram<Obj, X, Pull>& hist); //+
@@ -288,17 +288,25 @@ template <class Obj, class X, class Pull>
 void Histogram<Obj, X, Pull>::fill_rand(size_t _count, DynamicArray<Pair<X, X>>& _xseries) 
 {
 	srand(time(NULL));
-	if (columns) delete columns;
-	if (xseries) delete xseries;
+	if (columns)
+	{
+		delete columns;
+	}
+	if (xseries)
+	{
+		delete xseries;
+	}
 	columns_count = _xseries.GetSize();
 	count = _count;
 	columns = new HashTable<Pair<X, X>, DynamicArray<Obj>*, pair_hash<X>>;
 	columns->Reserve(_count);
+
 	DynamicArray<Obj> objects;
 	for (int i = 0; i < _count; ++i) 
 	{
 		objects.Append(generate<Obj>());
 	}
+
 	xseries = new DynamicArray<Pair<X, X>>(_xseries);
 	int i = 0;
 	for (int j = 0; j < columns_count; ++j) 
@@ -320,10 +328,13 @@ void Histogram<Obj, X, Pull>::fill_rand(size_t _count, DynamicArray<Pair<X, X>>&
 template <class Obj, class X, class Pull>
 void Histogram<Obj, X, Pull>::insert(Obj& object) 
 {
-	if (!xseries) return;
+	if (!xseries)
+	{
+		return;
+	}
 	for (int i = 0; i < columns_count; ++i) 
 	{
-		if (between(take_parametr(object), xseries->Get(i))) 
+		if (between(take_parametr(object), xseries->Get(i))) //?
 		{
 			columns->At(xseries->Get(i))->Append(object);
 		}
@@ -333,7 +344,10 @@ void Histogram<Obj, X, Pull>::insert(Obj& object)
 template <class Obj, class X, class Pull>
 void Histogram<Obj, X, Pull>::remove(X& value) 
 {
-	if (!columns) return;
+	if (!columns)
+	{
+		return;
+	}
 	for (int i = 0; i < columns_count; ++i) 
 	{
 		if (between(value, xseries->Get(i))) 
@@ -359,7 +373,7 @@ std::ostream& operator<<(std::ostream& out, Histogram<Obj, X, Pull>& hist)
 		DynamicArray<Obj>* column = hist.columns->At(hist.xseries->Get(i));
 		for (int j = 0; j < column->GetSize(); ++j) 
 		{
-			std::cout << column->Get(j) << " "; //hist.take_parametr(column->Get(j)) << " ";
+			std::cout << column->Get(j) << " ";
 		}
 		std::cout << '\n';
 	}
