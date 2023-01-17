@@ -26,7 +26,7 @@ void menu_type()
 	Histogram<Student, int, T> hist;
 	while (var) 
 	{
-		std::cout << "Choose option:\n 1. Fill random\n 2. Add\n 3. Remove\n 4. Show\n 5. Elements\n 7. Back\n> ";
+		std::cout << "Choose option:\n 1. Fill random\n 2. Add\n 3. Remove\n 4. Show\n 5. Elements\n 6. Back\n> ";
 		std::cin >> var;
 		switch (var) 
 		{
