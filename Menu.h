@@ -3,7 +3,7 @@
 #include <fstream>
 #include <vector>
 #include "Histogram.h"
-#include "Student.h"
+#include "Windows.h"
 
 template <class X>
 void get_xseries(DynamicArray<Pair<X, X>>& xseries) 
@@ -26,25 +26,34 @@ void menu_type()
 	Histogram<Student, int, T> hist;
 	while (var) 
 	{
-		std::cout << "Choose option:\n 1. Fill random\n 2. Add\n 3. Remove\n 4. Show\n 5. Show with elements\n 6. Describe\n 7. Back\n> ";
+		std::cout << "Choose option:\n 1. Fill random\n 2. Add\n 3. Remove\n 4. Show\n 5. Elements\n 7. Back\n> ";
 		std::cin >> var;
 		switch (var) 
 		{
 		case 1:
 		{
+			Sleep(10);
+			system("cls");
+
 			size_t count = 0;
-			std::cout << "Enter quantity: ";
+			std::cout << "Enter number of elements: ";
 			std::cin >> count;
 			DynamicArray<Pair<int, int>> xseries;
 			xseries.Reserve(count);
 			get_xseries<int>(xseries);
 			hist.fill_rand(count, xseries); 
+
+			Sleep(10);
+			system("cls");
 		}
 		break;
 
 		case 2:
 		{
-			std::cout << "Enter name, age, group, course:\n";
+			Sleep(10);
+			system("cls");
+
+			std::cout << "Enter name, age, group and course:\n";
 			std::string _name;
 			int _age;
 			int _group;
@@ -52,34 +61,48 @@ void menu_type()
 			std::cin >> _name >> _age >> _group >> _course;
 			Student st(_name, _age, _group, _course);
 			hist.insert(st); 
+
+			Sleep(10);
+			system("cls");
 		}
 		break;
 
 		case 3:
 		{
+			Sleep(10);
+			system("cls");
+
 			int a = 0;
 			std::cout << "Enter value: ";
 			std::cin >> a;
 			hist.remove(a); 
+
+			Sleep(10);
+			system("cls");
 		}
 		break;
 
 		case 4:
 		{
+			Sleep(10);
+			system("cls");
+
 			hist.show_file();
-			system("start Plot_text.exe");;
+			system("start Hist1.exe");
 		}
 		break;
 
 		case 5:
+			Sleep(10);
+			system("cls");
+
 			std::cout << hist;
 			break;
 
 		case 6:
-			hist.describe();
-			break;
+			Sleep(10);
+			system("cls");
 
-		case 7:
 			var = 0;
 			break;
 
@@ -100,12 +123,21 @@ void menu_hist()
 		switch (var) 
 		{
 		case 1:
+			Sleep(10);
+			system("cls");
+
 			menu_type<Age>();
 			break;
 		case 2:
+			Sleep(10);
+			system("cls");
+
 			menu_type<Group>();
 			break;
 		case 3:
+			Sleep(10);
+			system("cls");
+
 			menu_type<Course>();
 			break;
 		case 4:
@@ -126,6 +158,10 @@ void menu() {
 		switch (var) 
 		{
 		case 1:
+
+			Sleep(10);
+			system("cls");
+
 			menu_hist();
 			break;
 		case 2:
@@ -134,5 +170,7 @@ void menu() {
 		default:
 			std::cout << "Wrong option... Try again\n";
 		}
+		Sleep(10);
+		system("cls");
 	}
 }
