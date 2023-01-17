@@ -66,20 +66,9 @@ void menu_type()
 
 		case 4:
 		{
-			std::ofstream fout;
-			fout.open("input.txt", std::ofstream::trunc);
-
-			for (int i = 0; i < hist.get_columns_count(); i++)
-			{
-				fout << hist.get_left(i) << " ";
-				fout << hist.get_right(i) << " ";
-				fout << hist.get_column_size(i) << "\n";
-			}
-
-			fout.close();
+			hist.show_file();
 		}
-
-			//system("start Plot_text.exe");;
+		//system("start Plot_text.exe");;
 		break;
 
 		case 5:
