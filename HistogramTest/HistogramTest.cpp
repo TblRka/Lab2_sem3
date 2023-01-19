@@ -9,7 +9,6 @@ namespace HistogramTest
 	TEST_CLASS(HistogramTests)
 	{
 	public:
-
 		TEST_METHOD(Filling)
 		{
 			srand(time(NULL));
@@ -22,8 +21,8 @@ namespace HistogramTest
 				}
 			};
 			DynamicArray<Pair<char, char>> xseries({ Pair<char,char>{'a', 'f'}, Pair<char,char>{'g', 'k'}, Pair<char,char>{'l', 'p'}, Pair<char,char>{'q', 'v'}, Pair<char,char>{'w', 'z'} });
-			
 			DynamicArray<std::string> str_arr;
+			str_arr.Reserve(10000);
 			for (int i = 0; i < 10000; ++i) 
 			{
 				str_arr.Append(generate<std::string>());
