@@ -165,6 +165,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\DynamicArray.h" />
+    <ClInclude Include="..\Generator.h" />
+    <ClInclude Include="..\HashTable.h" />
+    <ClInclude Include="..\Histogram.h" />
+    <ClInclude Include="..\LinkedList.h" />
+    <ClInclude Include="..\Pair.h" />
+    <ClInclude Include="..\Student.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
