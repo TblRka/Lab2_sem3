@@ -45,11 +45,9 @@ public:
 	~Histogram(); //+
 
 	void show(char symb = 42);//+
-	void show_file();
-	void insert(Obj& object); //+?
-	void remove(X& value); //+?
-
-	void describe(); //+
+	void show_file(); //+
+	void insert(Obj& object); //+
+	void remove(X& value); //+
 
 	size_t get_columns_count();//+
 	size_t get_column_size(int index);//+
@@ -194,22 +192,6 @@ void Histogram<Obj, X, Pull>::show_file()
 			fout << max(xseries->Get(i)) << "\n";
 	}
 	fout.close();
-}
-
-template <class Obj, class X, class Pull>
-void Histogram<Obj, X, Pull>::describe() 
-{
-	if (!columns) return;
-	for (int i = 0; i < columns_count; ++i) 
-	{
-		const Pair<X, X>& pair = xseries->Get(i);
-		std::cout << pair << ":\n";
-		std::cout << "\tCount: " << columns->At(pair)->GetSize() << '\n';
-		std::cout << "\tMean: " << mean(pair) << '\n';
-		std::cout << "\tMedian: " << median(pair) << '\n';
-		std::cout << "\tMinimum: " << min(pair) << '\n';
-		std::cout << "\tMaximum: " << max(pair) << '\n';
-	}
 }
 
 template <class Obj, class X, class Pull>

@@ -249,7 +249,7 @@ double HashTable<Key, Value, Hash>::GetLoadFactor()
 	return static_cast<double>(size) / arr_size;
 }
 
-template <typename Key, typename Value, typename Hash> //тоже самое что и []
+template <typename Key, typename Value, typename Hash> 
 Value& HashTable<Key, Value, Hash>::At(const Key& key) 
 {
 	if (!table) 
@@ -344,7 +344,7 @@ void HashTable<Key, Value, Hash>::Rehash(size_t new_size) {
 	{
 		new_table->Get(i) = nullptr;
 	}
-	for (int i = 0; i < arr_size; ++i) // size
+	for (int i = 0; i < arr_size; ++i)
 	{
 		if (table->Get(i)) 
 		{
@@ -444,6 +444,7 @@ HashTable<Key, Value, Hash>& HashTable<Key, Value, Hash>::operator=(const HashTa
 	}
 	return *this;
 }
+
 
 template <typename Key, typename Value, typename Hash>
 Value& HashTable<Key, Value, Hash>::operator[](const Key& key) 

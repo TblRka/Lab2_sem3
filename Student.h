@@ -98,7 +98,7 @@ std::ostream& operator<<(std::ostream& out, const Student& student)
 
 
 struct Age {
-	int operator()(const Student& st) {
+	int operator() (const Student& st) {
 		return st.GetAge();
 	}
 };
