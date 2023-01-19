@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include ""
+#include "C:\Users\User\source\repos\TblRka\Lab2_sem3\Histogram.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -20,7 +20,7 @@ namespace HistogramTest
 				}
 			};
 			DynamicArray<Pair<char, char>> xseries({ Pair<char,char>{'a', 'f'},Pair<char,char>{'g', 'k'},Pair<char,char>{'l', 'p'},Pair<char,char>{'q', 'v'},Pair<char,char>{'w', 'z'} });
-			DynamicArray<std::string> str_arr;s
+			DynamicArray<std::string> str_arr;
 			for (int i = 0; i < 10000; ++i) {
 				str_arr.Append(generate<std::string>());
 			}
