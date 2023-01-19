@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
-    <ProjectGuid>{6BB0740C-E303-47FD-BA14-C58DE1A51AD0}</ProjectGuid>
+    <ProjectGuid>{6DEBA30D-B7BB-4F2E-AA56-6DB111634628}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>HistogramTest</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
