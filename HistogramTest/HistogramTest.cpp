@@ -13,19 +13,24 @@ namespace HistogramTest
 		TEST_METHOD(Filling)
 		{
 			srand(time(NULL));
-			struct KeyGetter {
-				char operator()(const std::string& str) {
+			struct KeyGetter 
+			{
+				char operator()(const std::string& str) 
+				{
 					if (str.empty()) return ' ';
 					return str[0];
 				}
 			};
-			DynamicArray<Pair<char, char>> xseries({ Pair<char,char>{'a', 'f'},Pair<char,char>{'g', 'k'},Pair<char,char>{'l', 'p'},Pair<char,char>{'q', 'v'},Pair<char,char>{'w', 'z'} });
+			DynamicArray<Pair<char, char>> xseries({ Pair<char,char>{'a', 'f'}, Pair<char,char>{'g', 'k'}, Pair<char,char>{'l', 'p'}, Pair<char,char>{'q', 'v'}, Pair<char,char>{'w', 'z'} });
+			
 			DynamicArray<std::string> str_arr;
-			for (int i = 0; i < 10000; ++i) {
+			for (int i = 0; i < 10000; ++i) 
+			{
 				str_arr.Append(generate<std::string>());
 			}
 			Histogram<std::string, char, KeyGetter> hist(xseries, str_arr);
-			for (int i = 0; i < 1000; ++i) {
+			for (int i = 0; i < 1000; ++i) 
+			{
 				hist.insert(generate<std::string>());
 			}
 			char c = 'c';
@@ -39,16 +44,18 @@ namespace HistogramTest
 			hist.remove(x);
 			hist.remove(r);
 		}
-		TEST_METHOD(Functions) {
+		TEST_METHOD(Functions) 
+		{
 			DynamicArray<Pair<int, int>> xseries({ Pair<int, int>{1, 20}, Pair<int, int>{21, 40},
-												Pair<int, int>{41, 60},Pair<int, int>{61, 80},
+												Pair<int, int>{41, 60}, Pair<int, int>{61, 80},
 												Pair<int, int>{81, 100} });
 			DynamicArray<Student> objs({ Student("Yan", 19), Student("Alexey", 19),
 			Student("Andrey", 20), Student("Artem", 40), Student("Nikita", 28),
 			Student("Artem", 42), Student("Michail", 55), Student("Ivan", 63),
 			Student("Jimmy", 69), Student("Maxim", 24), Student("Rob", 82),
-			Student("John", 31), Student("LordByron", 49) });
+			Student("John", 31), Student("Anton", 49) });
 			Histogram<Student, int, Age> hist(xseries, objs);
+
 			double mean1 = 19 + 19 + 20;
 			double mean2 = 40 + 28 + 24 + 31;
 			double mean3 = 42 + 55 + 49;
