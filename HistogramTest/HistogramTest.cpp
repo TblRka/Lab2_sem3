@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-//#include "C:\Users\User\source\repos\TblRka\Lab2_sem3\Histogram.h"
-#include "D:\Cpp\Sem3\Lab2_sem3\Histogram.h"
+#include "C:\Users\User\source\repos\TblRka\Lab2_sem3\Histogram.h"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
